@@ -1,0 +1,11 @@
+collision_sets:
+  jvrc1:
+    set1:
+      r1: jvrc1
+      r2: ground
+      collisions:
+        - body1: WAIST_R_S
+          body2: ground
+          iDist: 0.03
+          sDist: 0.001
+          damping: 0

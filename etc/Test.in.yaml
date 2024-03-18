@@ -5,7 +5,7 @@ Managed: false
 StepByStep: true
 # Change idle behaviour, if true the state is kept until transition,
 # otherwise the FSM holds the last state until transition
-IdleKeepState: false
+IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries:
 - "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@"
@@ -23,7 +23,7 @@ robots:
 # General constraints, always on
 constraints:
 - type: contact
-- type: dynamics
+- type: kinematics
   damper: [0.1, 0.01, 0.5]
 - type: compoundJoint
 # Collision constraint
@@ -39,18 +39,17 @@ contacts:
   r1Surface: RightFoot
   r2Surface: AllGround
 
-# Some options for a specific robot
-jvrc1:
-  posture:
-    stiffness: 1
-    weight: 10
-  ff:
-    stiffness: 2
-    weight: 100
 # Implement some additional text states
-states: {}
+states:
+  AddTest:
+    base: Test_Initial
+    AddCollisionSetsBefore: [set1]
+  RemoveTest:
+    base: Test_Initial
+    RemoveCollisionSetsAfter: [set1]
+
 # Transitions map
 transitions:
-- [Test_Initial, OK, Test_Initial, Strict]
+- [AddTest, OK, RemoveTest, Strict]
 # Initial state
-init: Test_Initial
+init: AddTest
